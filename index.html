@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=device-height, target-densitydpi=medium-dpi" />
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/cosmo/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <h2>please don't enter repeated values for each face in a  dice</h2>
+            </div>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-md-4"><label>Dice Faces 1</label></div>
+                <div class="col-md-1"><input class="dc1" id="dc11" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc1"id="dc12" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc1" id="dc13" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc1" id="dc14" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc1" id="dc15" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc1" id="dc16" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-4"><label>Dice Faces 2</label></div>
+                <div class="col-md-1"><input class="dc2" id="dc21" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc2" id="dc22" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc2" id="dc23" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc2" id="dc24" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc2" id="dc25" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+                <div class="col-md-1"><input class="dc2" id="dc26" maxlength="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'></div>
+            </div>
+            <br/>
+            <br/>
+            <div class="row">
+                <button type="button" class="btn btn-success pull-left" onclick="diceValidate1()">Approach1</button>
+                <button type="button" class="btn btn-success pull-right" onclick="diceValidate2()">Approach2</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        //approach 2
+        function diceValidate2() {
+
+            var eles1 = document.getElementsByClassName("dc1");
+            var eles2 = document.getElementsByClassName("dc2")
+
+            var cls1Length = eles1.length;
+
+            var cls2length = eles2.length;
+
+            var testcaseStatus = true;
+
+            var combinedVlaueCountfor6and9For1 = 0;
+            var combinedVlaueCountfor6and9For2 = 0;
+
+            for(var i = 0 ; i<cls1Length; i++) {
+
+                var ele1Value = parseInt(eles1.item(i).value);
+
+                if(ele1Value === 6 || ele1Value === 9) {
+                    combinedVlaueCountfor6and9For1 = combinedVlaueCountfor6and9For1+1;
+                }
+
+                console.log("value1");
+                console.log(ele1Value);
+                if(ele1Value>2) {
+
+                    for(var j = 0; j<cls2length; j++) {
+                        var ele2Value = parseInt(eles2.item(j).value);
+
+                        console.log("value2");
+                        console.log(ele2Value);
+                        if(ele1Value === ele2Value || (ele1Value == 6 && ele2Value ==9) || (ele1Value == 9 && ele2Value == 6)) {
+                            testcaseStatus = false;
+                        }
+
+
+//                        var combinedValue = (ele1Value*10)+ele2Value;
+
+                        if(ele2Value === 6 || ele2Value ===9 ) {
+                            combinedVlaueCountfor6and9For2 = combinedVlaueCountfor6and9For2+1;
+                        }
+
+                    }
+
+                }
+
+            }
+
+            console.log("test");
+
+            console.log(combinedVlaueCountfor6and9For1);
+            console.log(combinedVlaueCountfor6and9For2);
+
+            if(combinedVlaueCountfor6and9For1 >= 2) {
+                testcaseStatus = false;
+            }
+
+            if(combinedVlaueCountfor6and9For2 >= 4) {
+                testcaseStatus = false;
+            }
+
+            console.log(testcaseStatus);
+            if(testcaseStatus) {
+                alert("given inputs correct");
+            } else {
+                alert("given inputs are not correct");
+            }
+
+
+        }
+
+        //approach 1
+        function diceValidate1() {
+            var eles1 = document.getElementsByClassName("dc1");
+            var eles2 = document.getElementsByClassName("dc2")
+
+            var cls1Length = eles1.length;
+
+            var cls2length = eles2.length;
+
+            var testcaseStatus = true;
+
+            var counts = {
+                0:0,
+                1:0,
+                2:0,
+                3:0,
+                4:0,
+                5:0,
+                6:0,
+                7:0,
+                8:0,
+                9:0
+            }
+
+            for(var i = 0; i<cls1Length; i++) {
+                var ele1Value = parseInt(eles1.item(i).value);
+
+                if(counts.hasOwnProperty(ele1Value)){
+                    console.log("entered");
+                    counts[ele1Value] = counts[ele1Value]+1;
+                    console.log(counts[ele1Value]);
+                }
+
+            }
+
+            for(var j = 0; j<cls2length; j++) {
+                var ele2Value = parseInt(eles2.item(j).value);
+
+                if(counts.hasOwnProperty(ele2Value)) {
+                    counts[ele2Value] = counts[ele2Value]+1;
+                }
+            }
+
+            console.log(counts);
+
+            for(var z= 0; z<=9; z++) {
+
+                console.log(counts[z]);
+
+                if((z ===0 ||z === 1 || z === 2) && (counts[z] != 2)) {
+                    testcaseStatus = false;
+                    break;
+                } else if ((counts[z] < 1) && (z!=6 && z!=9)) {
+                    testcaseStatus = false;
+                    break;
+                }  else if((counts[6]+counts[9]) < 1) {
+                    testcaseStatus = false;
+                    break;
+                }
+
+            }
+
+            console.log(testcaseStatus);
+            if(testcaseStatus) {
+                alert("given inputs correct");
+            } else {
+                alert("given inputs are not correct");
+            }
+
+        }
+
+    </script>
+</body>
+</html>
